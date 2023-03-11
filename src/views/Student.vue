@@ -106,16 +106,31 @@ ChartJS.register(
     <h3 class="text-3xl">Leetcode Progress:</h3>
     <div class="grid grid-cols-2 lg:grid-cols-3 w-full gap-5">
       <div class="h-full border rounded-xl flex items-center justify-center">
+        <!-- {
+                backgroundColor: ['#41B883', '#E46651', '#00D8FF'],
+                data: [
+                  (studentLeetCodeData.easySolved /
+                    studentLeetCodeData.totalEasy) *
+                    100,
+                  (studentLeetCodeData.mediumSolved /
+                    studentLeetCodeData.totalMedium) *
+                    100,
+                  (studentLeetCodeData.hardSolved /
+                    studentLeetCodeData.totalHard) *
+                    100,
+                ],
+              }, -->
         <Bar
           id="my-chart-id"
           :options="{
             responsive: true,
-            animation: false,
+            maintainAspectRatio: false,
           }"
           :data="{
-            labels: ['Easy %', 'Medium %', 'Hard %'],
+            labels: ['Easy', 'Medium', 'Hard'],
             datasets: [
               {
+                label: 'Solved Percentage',
                 backgroundColor: ['#41B883', '#E46651', '#00D8FF'],
                 data: [
                   (studentLeetCodeData.easySolved /

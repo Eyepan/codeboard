@@ -49,7 +49,7 @@ const filterCriterias = [
   <div class="p-4 w-full">
     <h1 class="text-7xl hover:bg-black w-min">BATCHES</h1>
     <Spinner v-if="loading" />
-    Currently viewing batch: {{ currentBatch }}
+    <h3 class="text-2xl">Batch: {{ currentBatch }}</h3>
     <!-- filter by dept -->
     <div class="flex flex-row gap-5">
       <button
@@ -84,7 +84,7 @@ const filterCriterias = [
         :key="student.id"
       >
         <td class="border border-slate-500">
-          <RouterLink :to="`/${currentBatch}/${student.id}`">
+          <RouterLink :to="`/${currentBatch}/${student.id}`" class="underline">
             {{ student.name }}
           </RouterLink>
         </td>
