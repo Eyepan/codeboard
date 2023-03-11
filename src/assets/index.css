@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Climate+Crisis&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import "base.css";
+:root {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  transition: all 150ms ease-in-out;
+}
+
+:root {
+  --light-background: #dde2c6ff;
+  --light-text: #090c02ff;
+  --dark-background: #2b3121ff;
+  --dark-text: #e6eed6ff;
+  --primary-color: #598b2cff;
+  --primary-hover: #abd883ff;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Climate Crisis", cursive;
+}
+/* 
+    TODO: make the .btn-primary color gradient from primary to hover
+*/
+
+@layer base {
+  html {
+    @apply text-[var(--light-text)] dark:text-[var(--dark-text)];
+    @apply bg-[var(--light-background)] dark:bg-[var(--dark-background)];
+  }
+  .btn-primary {
+    @apply bg-[var(--primary-color)] hover:bg-[var(--primary-hover)];
+    @apply text-[var(--light-text)] dark:text-[var(--dark-text)];
+    @apply p-4 m-2 rounded-xl;
+  }
+
+  .btn-secondary {
+    @apply bg-[var(--primary-color)] hover:bg-[var(--primary-hover)];
+    @apply text-[var(--light-text)] dark:text-[var(--dark-text)];
+    @apply p-2 rounded-xl;
+  }
+}
