@@ -64,7 +64,7 @@ ChartJS.register(
 </script>
 
 <template>
-	<div v-auto-animate class="p-4 w-full h-screen overflow-y-scroll">
+	<div v-auto-animate class="px-20 overflow-y-scroll">
 		<ErrorLog v-if="error !== ''" :message="error" />
 		<Spinner v-if="loading" />
 		<div v-else>
@@ -127,21 +127,21 @@ ChartJS.register(
 					{{
 						studentLeetCodeData.matchedUser.submitStatsGlobal
 							.acSubmissionNum[1].count
-					}}%
+					}}
 				</p>
 				<p>
 					Medium Solved:
 					{{
 						studentLeetCodeData.matchedUser.submitStatsGlobal
 							.acSubmissionNum[2].count
-					}}%
+					}}
 				</p>
 				<p>
 					Hard Solved:
 					{{
 						studentLeetCodeData.matchedUser.submitStatsGlobal
 							.acSubmissionNum[3].count
-					}}%
+					}}
 				</p>
 			</div>
 			<h3 class="text-3xl">Leetcode Progress:</h3>

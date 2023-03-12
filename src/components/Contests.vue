@@ -4,7 +4,7 @@ import { useAppStore } from "../stores/appStore";
 import Spinner from "./Spinner.vue";
 import ErrorLog from "./ErrorLog.vue";
 import { ref, watch, reactive } from "vue";
-import { get_leetcode_contest_details } from "../utils/utils";
+import { get_contest_details } from "../utils/utils";
 import {
 	ContestResult,
 	defaultContestResult,
@@ -22,7 +22,11 @@ const searchFilter = ref("");
 async function searchContest() {
 	loading.value = true;
 	error.value = "";
-	contestDetails = await get_leetcode_contest_details(contestName.value);
+	console.log("Current platform", currentPlatform.value);
+	contestDetails = await get_contest_details(
+		currentPlatform.value,
+		contestName.value
+	);
 	searchWiseFilteredContestDetails = contestDetails;
 	loading.value = false;
 }
@@ -80,17 +84,6 @@ watch(searchFilter, () => {
 			{{ contestDetails.length }}
 		</div>
 		<table class="w-full" v-if="contestDetails.length > 0">
-			<!-- export interface ContestResult {
-            	username: string;
-            	rank: number;
-            	score: number;
-            	name: string;
-            	dept: string;
-            	batch: string;
-            	codechef_username: string;
-            	codeforces_username: string;
-            }
-             -->
 			<th class="border border-slate-500">Username</th>
 			<th class="border border-slate-500">Rank</th>
 			<th class="border border-slate-500">Score</th>

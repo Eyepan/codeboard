@@ -76,12 +76,14 @@ export async function get_student_leetcode_data(
 	return studentLeetCodeData;
 }
 
-export async function get_leetcode_contest_details(
+export async function get_contest_details(
+	platform: string,
 	contestCode: string
 ): Promise<ContestResult[]> {
 	let contestResultData: ContestResult[] = [];
+	console.log(`${apiUrl}/${platform}/contest/${contestCode}`);
 	await axios
-		.get(`${apiUrl}/leetcode/contest/${contestCode}`)
+		.get(`${apiUrl}/${platform}/contest/${contestCode}`)
 		.then((response) => {
 			contestResultData = response.data;
 		})
