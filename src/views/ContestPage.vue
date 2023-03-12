@@ -1,0 +1,45 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import Contests from "../components/Contests.vue";
+
+const platforms = ["leetcode", "codechef"];
+const currentPlatform = ref(platforms[0]);
+</script>
+
+<template>
+	<div class="w-screen flex flex-row items-start">
+		<!-- sidebar to select year platform -->
+		<div
+			class="fixed h-screen w-[20vw] lg:w-[10vw] p-2 bg-[var(--light-sidebar)] dark:bg-[var(--dark-sidebar)] text-black flex flex-col items-center justify-center"
+		>
+			<button
+				class="btn-primary bg-slate-500 hover:bg-slate-800"
+				@click="$router.replace('/')"
+			>
+				Go back to dashboard
+			</button>
+			<!-- spacer -->
+			<div class="flex-1"></div>
+			<button
+				class="btn-primary"
+				:class="
+					currentPlatform === platform
+						? '!bg-[var(--primary-hover)] border'
+						: ''
+				"
+				@click="currentPlatform = platform"
+				v-for="platform in platforms"
+			>
+				{{ platform }}
+			</button>
+			<div class="flex-1"></div>
+		</div>
+		<!-- main content -->
+		<!-- class="overflow-y-scroll" -->
+		<div
+			class="overflow-y-scroll ml-[20vw] lg:ml-[10vw] w-[80vw] lg:w-[90vw]"
+		>
+			<Contests />
+		</div>
+	</div>
+</template>

@@ -131,7 +131,7 @@ const departments = [
 					class="btn-secondary w-full"
 					:class="
 						selectedDepartment === department
-							? '!bg-[var(--primary-hover)]'
+							? '!bg-[var(--primary-hover)] border'
 							: ''
 					"
 					@click="selectedDepartment = department"
