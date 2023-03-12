@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch, watchEffect, reactive } from "vue";
 import { useRoute } from "vue-router";
-import { get_students_of_batch } from "../utils/utils";
+import { get_students } from "../utils/utils";
 import { Student } from "../models/student.model";
 import Spinner from "../components/Spinner.vue";
 import { storeToRefs } from "pinia";
@@ -9,9 +9,10 @@ import { useAppStore } from "../stores/appStore";
 import ErrorLog from "../components/ErrorLog.vue";
 const { currentBatch, error } = storeToRefs(useAppStore());
 const route = useRoute();
-const students = ref([] as Student[]);
+let students = reactive([] as Student[]);
+let filteredStudents = reactive([] as Student[]);
 const loading = ref(false);
-const filterCriteria = ref("ALL");
+const selectedDepartment = ref("ALL");
 
 onMounted(async () => {
 	loading.value = true;
@@ -19,8 +20,25 @@ onMounted(async () => {
 	if (typeof route.params.batch === "string") {
 		currentBatch.value = route.params.batch;
 	}
-	students.value = await get_students_of_batch(currentBatch.value);
+	students = await get_students();
+	filteredStudents = students;
 	loading.value = false;
+});
+
+watch(selectedDepartment, () => {
+	filteredStudents = students.filter(
+		(e) =>
+			((selectedDepartment.value === "ALL" ||
+				e.dept === selectedDepartment.value) &&
+				true) ||
+			currentBatch.value === e.batch
+	);
+});
+
+watch(currentBatch, () => {
+	filteredStudents = students.filter(
+		(e) => currentBatch.value === "ALL" || currentBatch.value === e.batch
+	);
 });
 
 const filterCriterias = [
@@ -37,12 +55,12 @@ const filterCriterias = [
 
 // watch(filterCriteria, () => {
 //   console.log(
-//     students.value.filter(
+//     students.filter(
 //       (e) => e.dept === filterCriteria.value || filterCriteria.value === "ALL"
 //     )
 //   );
 //   console.log(filterCriteria.value);
-//   console.log(students.value);
+//   console.log(students);
 // });
 </script>
 
@@ -53,7 +71,15 @@ const filterCriterias = [
 		<div v-else>
 			<h1 class="text-7xl hover:bg-black w-min">BATCHES</h1>
 			<h3 class="text-2xl">
-				Batch: {{ currentBatch }} Dept: {{ filterCriteria }}
+				Batch: {{ currentBatch }} Dept:
+				{{ selectedDepartment }} Students:
+				{{
+					students.filter(
+						(e) =>
+							selectedDepartment === "ALL" ||
+							e.dept === selectedDepartment
+					).length
+				}}
 			</h3>
 			<!-- filter by dept -->
 			<div class="flex flex-row gap-5 mt-5">
@@ -62,11 +88,11 @@ const filterCriterias = [
 					:key="criteria"
 					class="w-full bg-white dark:bg-black hover:bg-white darK:hover:bg-black hover:text-white dark:hover:text-black p-2"
 					:class="
-						filterCriteria === criteria
+						selectedDepartment === criteria
 							? '!bg-[var(--primary-color)] !hover:bg-[var(--primary-hover)]'
 							: ''
 					"
-					@click="filterCriteria = criteria"
+					@click="selectedDepartment = criteria"
 				>
 					{{ criteria }}
 				</button>
@@ -80,19 +106,9 @@ const filterCriterias = [
 				<th class="border border-slate-500">Leetcode ID</th>
 				<th class="border border-slate-500">Codechef ID</th>
 				<th class="border border-slate-500">Codeforces ID</th>
-				<tr
-					v-for="student in students.filter(
-						(e) =>
-							e.dept === filterCriteria ||
-							filterCriteria === 'ALL'
-					)"
-					:key="student.id"
-				>
+				<tr v-for="student in filteredStudents" :key="student.id">
 					<td class="border border-slate-500">
-						<RouterLink
-							:to="`/${currentBatch}/${student.id}`"
-							class="underline"
-						>
+						<RouterLink :to="`/${student.id}`" class="underline">
 							{{ student.name }}
 						</RouterLink>
 					</td>

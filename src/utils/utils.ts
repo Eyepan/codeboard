@@ -8,7 +8,7 @@ const { error } = storeToRefs(useAppStore());
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export async function get_students_of_batch(batch: string): Promise<Student[]> {
+export async function get_students(): Promise<Student[]> {
 	let students: Student[] = [
 		{
 			id: "",
@@ -20,25 +20,16 @@ export async function get_students_of_batch(batch: string): Promise<Student[]> {
 			codeforces_username: "",
 		},
 	];
-	if (batch === "ALL") {
-		await axios
-			.get(`${apiUrl}/students`)
-			.then((response) => {
-				students = response.data;
-			})
-			.catch((e) => {
-				error.value = e;
-			});
-	} else {
-		await axios
-			.get(`${apiUrl}/students/${batch}`)
-			.then((response) => {
-				students = response.data;
-			})
-			.catch((e) => {
-				error.value = e;
-			});
-	}
+	await axios
+		.get(`${apiUrl}/students`)
+		.then((response) => {
+			students = response.data;
+		})
+		.catch((e) => {
+			if (e.response) {
+				error.value = e.response.data;
+			}
+		});
 	return students;
 }
 
@@ -58,7 +49,9 @@ export async function get_student_by_id(id: string): Promise<Student> {
 			student = response.data;
 		})
 		.catch((e) => {
-			error.value = e;
+			if (e.response) {
+				error.value = e.response.data;
+			}
 		});
 	return student;
 }
@@ -74,7 +67,9 @@ export async function get_student_leetcode_data(
 			studentLeetCodeData = response.data;
 		})
 		.catch((e) => {
-			error.value = e;
+			if (e.response) {
+				error.value = e.response.data["detail"];
+			}
 		});
 	return studentLeetCodeData;
 }
