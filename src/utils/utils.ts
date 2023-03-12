@@ -1,9 +1,11 @@
-import { defaultStudentLeetCodeData } from "./../models/studentleetcode.model";
+import { ContestResult } from "../models/lccontests.model";
 import { Student } from "./../models/student.model";
-import axios from "axios";
 import StudentLeetCodeData from "../models/studentleetcode.model";
+import axios from "axios";
+import { defaultStudentLeetCodeData } from "./../models/studentleetcode.model";
 import { storeToRefs } from "pinia";
 import { useAppStore } from "../stores/appStore";
+
 const { error } = storeToRefs(useAppStore());
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -72,4 +74,21 @@ export async function get_student_leetcode_data(
 			}
 		});
 	return studentLeetCodeData;
+}
+
+export async function get_leetcode_contest_details(
+	contestCode: string
+): Promise<ContestResult[]> {
+	let contestResultData: ContestResult[] = [];
+	await axios
+		.get(`${apiUrl}/leetcode/contest/${contestCode}`)
+		.then((response) => {
+			contestResultData = response.data;
+		})
+		.catch((e) => {
+			if (e.response) {
+				error.value = e.response.data["detail"];
+			}
+		});
+	return contestResultData;
 }

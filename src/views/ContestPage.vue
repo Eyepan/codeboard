@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Contests from "../components/Contests.vue";
+import { storeToRefs } from "pinia";
+import { useAppStore } from "../stores/appStore";
+const { currentPlatform } = storeToRefs(useAppStore());
 
 const platforms = ["leetcode", "codechef"];
-const currentPlatform = ref(platforms[0]);
 </script>
 
 <template>

@@ -107,12 +107,12 @@ const departments = [
 		<Spinner v-if="loading" />
 		<ErrorLog v-if="error !== ''" :message="error" />
 		<div v-else>
-			<div class="flex flex-row justify-between">
-				<h1 class="text-7xl hover:bg-black w-min">Dashboard</h1>
+			<div class="flex flex-row justify-between gap-10">
+				<h1 class="text-7xl">Dashboard</h1>
 				<input
 					type="text"
 					v-model="searchFilter"
-					class="bg-black border ml-4 my-4 p-2 min-w-[300px]"
+					class="bg-black border min-w-0 p-2"
 					placeholder="Filter students.."
 				/>
 			</div>
