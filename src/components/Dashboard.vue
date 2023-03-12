@@ -10,8 +10,9 @@ import ErrorLog from "./ErrorLog.vue";
 const { currentBatch, error } = storeToRefs(useAppStore());
 const route = useRoute();
 let students = reactive([] as Student[]);
-let filteredStudents = reactive([] as Student[]);
-let searchFilteredStudents = reactive([] as Student[]);
+let batchWiseFilteredStudents = reactive([] as Student[]);
+let departmentWiseFilteredStudents = reactive([] as Student[]);
+let searchWiseFilteredStudents = reactive([] as Student[]);
 const loading = ref(false);
 const selectedDepartment = ref("ALL");
 const searchFilter = ref("");
@@ -23,30 +24,35 @@ onMounted(async () => {
 		currentBatch.value = route.params.batch;
 	}
 	students = await get_students();
-	filteredStudents = students;
-	searchFilteredStudents = filteredStudents;
+	batchWiseFilteredStudents = students;
+	departmentWiseFilteredStudents = batchWiseFilteredStudents;
+	searchWiseFilteredStudents = departmentWiseFilteredStudents;
 	loading.value = false;
 });
 
-watch(selectedDepartment, () => {
-	filteredStudents = students.filter(
-		(e) =>
-			((selectedDepartment.value === "ALL" ||
-				e.dept === selectedDepartment.value) &&
-				true) ||
-			currentBatch.value === e.batch
-	);
-});
-
 watch(currentBatch, () => {
-	filteredStudents = students.filter(
+	console.log(currentBatch.value);
+	batchWiseFilteredStudents = students.filter(
 		(e) => currentBatch.value === "ALL" || currentBatch.value === e.batch
 	);
+	departmentWiseFilteredStudents = batchWiseFilteredStudents;
+	searchWiseFilteredStudents = departmentWiseFilteredStudents;
+});
+
+watch(selectedDepartment, () => {
+	console.log(selectedDepartment.value);
+	console.log(batchWiseFilteredStudents);
+	departmentWiseFilteredStudents = batchWiseFilteredStudents.filter(
+		(e) =>
+			selectedDepartment.value === "ALL" ||
+			e.dept === selectedDepartment.value
+	);
+	searchWiseFilteredStudents = departmentWiseFilteredStudents;
 });
 
 watch(searchFilter, () => {
 	if (searchFilter.value !== "") {
-		searchFilteredStudents = filteredStudents.filter(
+		searchWiseFilteredStudents = departmentWiseFilteredStudents.filter(
 			(e) =>
 				e.name
 					.toLowerCase()
@@ -69,11 +75,11 @@ watch(searchFilter, () => {
 					.includes(searchFilter.value.toLowerCase())
 		);
 	} else {
-		searchFilteredStudents = filteredStudents;
+		searchWiseFilteredStudents = departmentWiseFilteredStudents;
 	}
 });
 
-const filterCriterias = [
+const departments = [
 	"ALL",
 	"CSE",
 	"IT",
@@ -114,23 +120,23 @@ const filterCriterias = [
 			<h3 class="text-2xl flex flex-row justify-between">
 				<div>Batch: {{ currentBatch }}</div>
 				<div>Dept: {{ selectedDepartment }}</div>
-				<div>Students: {{ filteredStudents.length }}</div>
+				<div>Students: {{ batchWiseFilteredStudents.length }}</div>
 				<div>Total Students: {{ students.length }}</div>
 			</h3>
 			<!-- filter by dept -->
 			<div class="flex flex-row gap-5 mt-5">
 				<button
-					v-for="criteria in filterCriterias"
-					:key="criteria"
+					v-for="department in departments"
+					:key="department"
 					class="btn-secondary w-full"
 					:class="
-						selectedDepartment === criteria
+						selectedDepartment === department
 							? '!bg-[var(--primary-hover)]'
 							: ''
 					"
-					@click="selectedDepartment = criteria"
+					@click="selectedDepartment = department"
 				>
-					{{ criteria }}
+					{{ department }}
 				</button>
 			</div>
 			<div class="h-1 my-5 dark:bg-white bg-black w-full"></div>
@@ -142,7 +148,10 @@ const filterCriterias = [
 				<th class="border border-slate-500">Leetcode ID</th>
 				<th class="border border-slate-500">Codechef ID</th>
 				<th class="border border-slate-500">Codeforces ID</th>
-				<tr v-for="student in searchFilteredStudents" :key="student.id">
+				<tr
+					v-for="student in searchWiseFilteredStudents"
+					:key="student.id"
+				>
 					<td class="border border-slate-500">
 						<RouterLink :to="`/${student.id}`" class="underline">
 							{{ student.name }}
