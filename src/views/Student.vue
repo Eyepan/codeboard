@@ -19,7 +19,10 @@ import {
 	LinearScale,
 	ArcElement,
 } from "chart.js";
-
+import { storeToRefs } from "pinia";
+import { useAppStore } from "../stores/appStore";
+import ErrorLog from "../components/ErrorLog.vue";
+const { error } = storeToRefs(useAppStore());
 const route = useRoute();
 const loading = ref(false);
 const student = ref({} as Student);
@@ -29,12 +32,24 @@ const studentLeetCodeData = ref<StudentLeetCodeData>(
 
 onMounted(async () => {
 	loading.value = true;
+	error.value = "";
 	if (typeof route.params.id === "string") {
 		student.value = await get_student_by_id(route.params.id);
 	}
 	studentLeetCodeData.value = await get_student_leetcode_data(
 		student.value.leetcode_username
 	);
+	if (error.value !== "") {
+		student.value = {
+			id: "Not Found",
+			name: "Not Found",
+			dept: "Not Found",
+			batch: "Not Found",
+			leetcode_username: "Not Found",
+			codechef_username: "Not Found",
+			codeforces_username: "Not Found",
+		};
+	}
 	loading.value = false;
 });
 ChartJS.register(
@@ -51,6 +66,7 @@ ChartJS.register(
 <template>
 	<div v-auto-animate class="p-4 w-full">
 		<Spinner v-if="loading" />
+		<ErrorLog v-if="error !== ''" :message="error" />
 		<div v-else>
 			<h1 class="text-7xl">{{ student.name }}</h1>
 			<h3 class="text-3xl">Student Details:</h3>

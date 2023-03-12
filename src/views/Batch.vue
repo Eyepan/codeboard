@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import { storeToRefs } from "pinia";
-import { useAppStore } from "../stores/appStore";
 import { get_students_of_batch } from "../utils/utils";
 import { Student } from "../models/student.model";
 import Spinner from "../components/Spinner.vue";
-
-const { currentBatch } = storeToRefs(useAppStore());
+import { storeToRefs } from "pinia";
+import { useAppStore } from "../stores/appStore";
+import ErrorLog from "../components/ErrorLog.vue";
+const { currentBatch, error } = storeToRefs(useAppStore());
 const route = useRoute();
 const students = ref([] as Student[]);
 const loading = ref(false);
@@ -15,6 +15,7 @@ const filterCriteria = ref("ALL");
 
 onMounted(async () => {
 	loading.value = true;
+	error.value = "";
 	if (typeof route.params.batch === "string") {
 		currentBatch.value = route.params.batch;
 	}
@@ -48,6 +49,7 @@ const filterCriterias = [
 <template>
 	<div class="p-4 w-full">
 		<Spinner v-if="loading" />
+		<ErrorLog v-if="error !== ''" :message="error" />
 		<div v-else>
 			<h1 class="text-7xl hover:bg-black w-min">BATCHES</h1>
 			<h3 class="text-2xl">Batch: {{ currentBatch }}</h3>
