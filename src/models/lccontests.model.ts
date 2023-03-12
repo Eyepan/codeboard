@@ -11,5 +11,10 @@ export interface ContestResult {
 	username: string;
 	rank: number;
 	score: number;
-	finishTime: number;
 }
+
+export const defaultContestResult = {
+	username: "",
+	rank: 0,
+	score: 0,
+};

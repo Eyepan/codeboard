@@ -116,7 +116,6 @@ const departments = [
 					placeholder="Filter students.."
 				/>
 			</div>
-			<!-- TODO: Search bar -->
 			<h3 class="text-2xl flex flex-row justify-between">
 				<div>Batch: {{ currentBatch }}</div>
 				<div>Dept: {{ selectedDepartment }}</div>
