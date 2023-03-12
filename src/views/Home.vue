@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useAppStore } from "../stores/appStore";
-import Batch from "./Batch.vue";
+import Batch from "../components/Dashboard.vue";
 
 const { currentBatch } = storeToRefs(useAppStore());
 

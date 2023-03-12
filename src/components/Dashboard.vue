@@ -3,16 +3,17 @@ import { computed, onMounted, ref, watch, watchEffect, reactive } from "vue";
 import { useRoute } from "vue-router";
 import { get_students } from "../utils/utils";
 import { Student } from "../models/student.model";
-import Spinner from "../components/Spinner.vue";
+import Spinner from "./Spinner.vue";
 import { storeToRefs } from "pinia";
 import { useAppStore } from "../stores/appStore";
-import ErrorLog from "../components/ErrorLog.vue";
+import ErrorLog from "./ErrorLog.vue";
 const { currentBatch, error } = storeToRefs(useAppStore());
 const route = useRoute();
 let students = reactive([] as Student[]);
 let filteredStudents = reactive([] as Student[]);
 const loading = ref(false);
 const selectedDepartment = ref("ALL");
+const searchFilter = ref("");
 
 onMounted(async () => {
 	loading.value = true;
@@ -33,6 +34,35 @@ watch(selectedDepartment, () => {
 				true) ||
 			currentBatch.value === e.batch
 	);
+});
+
+watch(searchFilter, () => {
+	if (searchFilter.value !== "") {
+		filteredStudents = students.filter(
+			(e) =>
+				e.name
+					.toLowerCase()
+					.includes(searchFilter.value.toLowerCase()) ||
+				e.id.toLowerCase().includes(searchFilter.value.toLowerCase()) ||
+				e.dept
+					.toLowerCase()
+					.includes(searchFilter.value.toLowerCase()) ||
+				e.batch
+					.toLowerCase()
+					.includes(searchFilter.value.toLowerCase()) ||
+				e.codechef_username
+					.toLowerCase()
+					.includes(searchFilter.value.toLowerCase()) ||
+				e.codeforces_username
+					.toLowerCase()
+					.includes(searchFilter.value.toLowerCase()) ||
+				e.leetcode_username
+					.toLowerCase()
+					.includes(searchFilter.value.toLowerCase())
+		);
+	} else {
+		filteredStudents = students;
+	}
 });
 
 watch(currentBatch, () => {
@@ -69,18 +99,21 @@ const filterCriterias = [
 		<Spinner v-if="loading" />
 		<ErrorLog v-if="error !== ''" :message="error" />
 		<div v-else>
+			<div class="flex flex-row justify-between">
+				<h1 class="text-7xl hover:bg-black w-min">Dashboard</h1>
+				<input
+					type="text"
+					v-model="searchFilter"
+					class="bg-black border ml-4 my-4 p-2 min-w-[300px]"
+					placeholder="Filter students.."
+				/>
+			</div>
 			<!-- TODO: Search bar -->
-			<h1 class="text-7xl hover:bg-black w-min">BATCHES</h1>
-			<h3 class="text-2xl">
-				Batch: {{ currentBatch }} Dept:
-				{{ selectedDepartment }} Students:
-				{{
-					students.filter(
-						(e) =>
-							selectedDepartment === "ALL" ||
-							e.dept === selectedDepartment
-					).length
-				}}
+			<h3 class="text-2xl flex flex-row justify-between">
+				<div>Batch: {{ currentBatch }}</div>
+				<div>Dept: {{ selectedDepartment }}</div>
+				<div>Students: {{ filteredStudents.length }}</div>
+				<div>Total Students: {{ students.length }}</div>
 			</h3>
 			<!-- filter by dept -->
 			<div class="flex flex-row gap-5 mt-5">
