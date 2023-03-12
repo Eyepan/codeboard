@@ -11,6 +11,7 @@ const { currentBatch, error } = storeToRefs(useAppStore());
 const route = useRoute();
 let students = reactive([] as Student[]);
 let filteredStudents = reactive([] as Student[]);
+let searchFilteredStudents = reactive([] as Student[]);
 const loading = ref(false);
 const selectedDepartment = ref("ALL");
 const searchFilter = ref("");
@@ -23,6 +24,7 @@ onMounted(async () => {
 	}
 	students = await get_students();
 	filteredStudents = students;
+	searchFilteredStudents = filteredStudents;
 	loading.value = false;
 });
 
@@ -36,9 +38,15 @@ watch(selectedDepartment, () => {
 	);
 });
 
+watch(currentBatch, () => {
+	filteredStudents = students.filter(
+		(e) => currentBatch.value === "ALL" || currentBatch.value === e.batch
+	);
+});
+
 watch(searchFilter, () => {
 	if (searchFilter.value !== "") {
-		filteredStudents = filteredStudents.filter(
+		searchFilteredStudents = filteredStudents.filter(
 			(e) =>
 				e.name
 					.toLowerCase()
@@ -61,20 +69,8 @@ watch(searchFilter, () => {
 					.includes(searchFilter.value.toLowerCase())
 		);
 	} else {
-		filteredStudents = students.filter(
-			(e) =>
-				((selectedDepartment.value === "ALL" ||
-					e.dept === selectedDepartment.value) &&
-					true) ||
-				currentBatch.value === e.batch
-		);
+		searchFilteredStudents = filteredStudents;
 	}
-});
-
-watch(currentBatch, () => {
-	filteredStudents = students.filter(
-		(e) => currentBatch.value === "ALL" || currentBatch.value === e.batch
-	);
 });
 
 const filterCriterias = [
@@ -146,7 +142,7 @@ const filterCriterias = [
 				<th class="border border-slate-500">Leetcode ID</th>
 				<th class="border border-slate-500">Codechef ID</th>
 				<th class="border border-slate-500">Codeforces ID</th>
-				<tr v-for="student in filteredStudents" :key="student.id">
+				<tr v-for="student in searchFilteredStudents" :key="student.id">
 					<td class="border border-slate-500">
 						<RouterLink :to="`/${student.id}`" class="underline">
 							{{ student.name }}
