@@ -2,19 +2,30 @@
 //     username: str
 //     rank: int
 //     score: int
-//     finish_time: str
-
-// class ContestResults(BaseModel):
-//     results: list[ContestResult]
+//     name: str
+//     dept: str
+//     batch: str
+//     codechef_username: str
+//     codeforces_username: str
 
 export interface ContestResult {
 	username: string;
 	rank: number;
 	score: number;
+	name: string;
+	dept: string;
+	batch: string;
+	codechef_username: string;
+	codeforces_username: string;
 }
 
 export const defaultContestResult = {
 	username: "",
 	rank: 0,
 	score: 0,
+	name: "",
+	dept: "",
+	batch: "",
+	codechef_username: "",
+	codeforces_username: "",
 };

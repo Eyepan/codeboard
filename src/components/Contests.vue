@@ -13,7 +13,7 @@ import {
 const { currentPlatform, error } = storeToRefs(useAppStore());
 const loading = ref(false);
 const contestName = ref("");
-const contestDetails = ref<ContestResult[]>([defaultContestResult]);
+let contestDetails = reactive([] as ContestResult[]);
 let searchWiseFilteredContestDetails = reactive<ContestResult[]>([
 	defaultContestResult,
 ]);
@@ -22,20 +22,27 @@ const searchFilter = ref("");
 async function searchContest() {
 	loading.value = true;
 	error.value = "";
-	contestDetails.value = await get_leetcode_contest_details(
-		contestName.value
-	);
-	searchWiseFilteredContestDetails = contestDetails.value;
+	contestDetails = await get_leetcode_contest_details(contestName.value);
+	searchWiseFilteredContestDetails = contestDetails;
 	loading.value = false;
 }
 
 watch(searchFilter, () => {
 	if (searchFilter.value === "") {
-		searchWiseFilteredContestDetails = contestDetails.value;
+		searchWiseFilteredContestDetails = contestDetails;
 	} else {
-		searchWiseFilteredContestDetails = contestDetails.value.filter(
+		searchWiseFilteredContestDetails = contestDetails.filter(
 			(contestDetail) =>
 				contestDetail.username
+					.toLowerCase()
+					.includes(searchFilter.value.toLowerCase()) ||
+				contestDetail.name
+					.toLowerCase()
+					.includes(searchFilter.value.toLowerCase()) ||
+				contestDetail.dept
+					.toLowerCase()
+					.includes(searchFilter.value.toLowerCase()) ||
+				contestDetail.batch
 					.toLowerCase()
 					.includes(searchFilter.value.toLowerCase())
 		);
@@ -68,11 +75,28 @@ watch(searchFilter, () => {
 				Search {{ currentPlatform }} contest
 			</button>
 		</form>
-		<div class="my-2">Total Participants: {{ contestDetails.length }}</div>
-		<table class="w-full" v-if="contestDetails.length > 1">
+		<div class="my-2" v-if="contestDetails.length > 0">
+			Total Participants:
+			{{ contestDetails.length }}
+		</div>
+		<table class="w-full" v-if="contestDetails.length > 0">
+			<!-- export interface ContestResult {
+            	username: string;
+            	rank: number;
+            	score: number;
+            	name: string;
+            	dept: string;
+            	batch: string;
+            	codechef_username: string;
+            	codeforces_username: string;
+            }
+             -->
 			<th class="border border-slate-500">Username</th>
 			<th class="border border-slate-500">Rank</th>
 			<th class="border border-slate-500">Score</th>
+			<th class="border border-slate-500">Name</th>
+			<th class="border border-slate-500">Dept</th>
+			<th class="border border-slate-500">Batch</th>
 			<tr
 				v-for="contestDetail in searchWiseFilteredContestDetails"
 				:key="contestDetail.rank"
@@ -85,6 +109,15 @@ watch(searchFilter, () => {
 				</td>
 				<td class="border border-slate-500">
 					{{ contestDetail.score }}
+				</td>
+				<td class="border border-slate-500">
+					{{ contestDetail.name }}
+				</td>
+				<td class="border border-slate-500">
+					{{ contestDetail.dept }}
+				</td>
+				<td class="border border-slate-500">
+					{{ contestDetail.batch }}
 				</td>
 			</tr>
 		</table>
