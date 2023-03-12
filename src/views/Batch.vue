@@ -69,6 +69,7 @@ const filterCriterias = [
 		<Spinner v-if="loading" />
 		<ErrorLog v-if="error !== ''" :message="error" />
 		<div v-else>
+			<!-- TODO: Search bar -->
 			<h1 class="text-7xl hover:bg-black w-min">BATCHES</h1>
 			<h3 class="text-2xl">
 				Batch: {{ currentBatch }} Dept:
@@ -86,10 +87,10 @@ const filterCriterias = [
 				<button
 					v-for="criteria in filterCriterias"
 					:key="criteria"
-					class="w-full bg-white dark:bg-black hover:bg-white darK:hover:bg-black hover:text-white dark:hover:text-black p-2"
+					class="btn-secondary w-full"
 					:class="
 						selectedDepartment === criteria
-							? '!bg-[var(--primary-color)] !hover:bg-[var(--primary-hover)]'
+							? '!bg-[var(--primary-hover)]'
 							: ''
 					"
 					@click="selectedDepartment = criteria"

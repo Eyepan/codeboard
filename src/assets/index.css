@@ -1,8 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Climate+Crisis&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import "base.css";
 :root {
-	font-family: "Montserrat", sans-serif;
+	font-family: "Poppins", sans-serif;
 	font-weight: 600;
 
 	font-synthesis: none;
@@ -32,7 +31,8 @@
 h1,
 h2,
 h3 {
-	font-family: "Climate Crisis", cursive;
+	font-family: "Poppins", sans-serif;
+	font-weight: 700;
 }
 /* 
     TODO: make the .btn-primary color gradient from primary to hover
@@ -46,7 +46,8 @@ h3 {
 	.btn-primary {
 		@apply bg-[var(--primary-color)] hover:bg-[var(--primary-hover)];
 		@apply text-[var(--light-text)] dark:text-[var(--dark-text)];
-		@apply p-4 m-2;
+		@apply p-4 w-full;
+		@apply text-center;
 	}
 
 	.btn-secondary {

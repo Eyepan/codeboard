@@ -65,8 +65,8 @@ ChartJS.register(
 
 <template>
 	<div v-auto-animate class="p-4 w-full h-screen overflow-y-scroll">
-		<Spinner v-if="loading" />
 		<ErrorLog v-if="error !== ''" :message="error" />
+		<Spinner v-if="loading" />
 		<div v-else>
 			<h1 class="text-7xl">{{ student.name }}</h1>
 			<h3 class="text-3xl">Student Details:</h3>

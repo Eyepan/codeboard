@@ -8,8 +8,8 @@ const { message } = defineProps<{ message: string }>();
 	>
 		<h1 class="text-5xl">Error</h1>
 		<h1 class="text-3xl">{{ message }}</h1>
-		<button class="btn-primary" @click="$router.replace('/')">
-			Go back to safety
+		<button class="btn-secondary" @click="$router.replace('/')">
+			Go back to home
 		</button>
 	</div>
 </template>

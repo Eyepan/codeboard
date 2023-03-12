@@ -4,6 +4,8 @@ import { useAppStore } from "../stores/appStore";
 import Batch from "./Batch.vue";
 
 const { currentBatch } = storeToRefs(useAppStore());
+
+const batches = ["ALL", "2023", "2024", "2025"];
 </script>
 
 <template>
@@ -12,12 +14,16 @@ const { currentBatch } = storeToRefs(useAppStore());
 		<div
 			class="absolute overflow-none left-0 top-0 bottom-0 min-w-[20vw] lg:min-w-[10vw] p-2 bg-[var(--light-sidebar)] dark:bg-[var(--dark-sidebar)] text-black flex flex-col items-center justify-center"
 		>
-			<h1 class="btn-primary" @click="currentBatch = 'ALL'">
-				All Batches
-			</h1>
-			<h1 class="btn-primary" @click="currentBatch = '2023'">2023</h1>
-			<h1 class="btn-primary" @click="currentBatch = '2024'">2024</h1>
-			<h1 class="btn-primary" @click="currentBatch = '2025'">2025</h1>
+			<button
+				class="btn-primary"
+				:class="
+					currentBatch === batch ? '!bg-[var(--primary-hover)]' : ''
+				"
+				@click="currentBatch = batch"
+				v-for="batch in batches"
+			>
+				{{ batch }}
+			</button>
 		</div>
 		<!-- main content -->
 		<!-- class="overflow-y-scroll" -->
