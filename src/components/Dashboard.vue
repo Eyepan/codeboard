@@ -38,7 +38,7 @@ watch(selectedDepartment, () => {
 
 watch(searchFilter, () => {
 	if (searchFilter.value !== "") {
-		filteredStudents = students.filter(
+		filteredStudents = filteredStudents.filter(
 			(e) =>
 				e.name
 					.toLowerCase()
@@ -61,7 +61,13 @@ watch(searchFilter, () => {
 					.includes(searchFilter.value.toLowerCase())
 		);
 	} else {
-		filteredStudents = students;
+		filteredStudents = students.filter(
+			(e) =>
+				((selectedDepartment.value === "ALL" ||
+					e.dept === selectedDepartment.value) &&
+					true) ||
+				currentBatch.value === e.batch
+		);
 	}
 });
 
