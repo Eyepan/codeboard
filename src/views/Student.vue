@@ -158,7 +158,6 @@ ChartJS.register(
 						:data="{
 							datasets: [
 								{
-									label: 'Solved',
 									backgroundColor: [
 										'#41B883',
 										'#E46651',
@@ -215,7 +214,6 @@ ChartJS.register(
 						:data="{
 							datasets: [
 								{
-									label: 'Solved',
 									backgroundColor: ['#41B883', '#E46651'],
 									data: [
 										studentLeetCodeData.matchedUser
