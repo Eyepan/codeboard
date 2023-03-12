@@ -64,7 +64,7 @@ ChartJS.register(
 </script>
 
 <template>
-	<div v-auto-animate class="p-4 w-full">
+	<div v-auto-animate class="p-4 w-full h-screen overflow-y-scroll">
 		<Spinner v-if="loading" />
 		<ErrorLog v-if="error !== ''" :message="error" />
 		<div v-else>
@@ -83,8 +83,26 @@ ChartJS.register(
 						>{{ student.leetcode_username }}</a
 					>
 				</p>
-				<p>Codechef: {{ student.codechef_username }}</p>
-				<p>CodeForces: {{ student.codeforces_username }}</p>
+				<p>
+					Codechef:
+					<a
+						:href="`https://www.codechef.com/users/${student.codechef_username}`"
+						target="_blank"
+						class="underline"
+					>
+						{{ student.codechef_username }}
+					</a>
+				</p>
+				<p>
+					CodeForces:
+					<a
+						class="underline"
+						target="_blank"
+						:href="`https://codeforces.com/profile/${student.codeforces_username}`"
+					>
+						{{ student.codeforces_username }}
+					</a>
+				</p>
 			</div>
 			<h3 class="text-3xl">Leetcode Details:</h3>
 			<div class="grid grid-cols-3">
@@ -129,7 +147,7 @@ ChartJS.register(
 			<h3 class="text-3xl">Leetcode Progress:</h3>
 			<div class="grid grid-cols-2 lg:grid-cols-3 w-full gap-5">
 				<div
-					class="h-full border rounded-xl flex items-center justify-center"
+					class="h-full border flex items-center justify-center flex-col gap-10"
 				>
 					<Bar
 						id="my-chart-id"
@@ -141,7 +159,7 @@ ChartJS.register(
 							labels: ['Easy', 'Medium', 'Hard'],
 							datasets: [
 								{
-									label: 'Solved Percentage',
+									label: 'Solved Questions',
 									backgroundColor: [
 										'#41B883',
 										'#E46651',
@@ -164,7 +182,9 @@ ChartJS.register(
 					/>
 				</div>
 				<!-- pie chart of completion -->
-				<div class="w-full border rounded-xl">
+				<div
+					class="w-full border flex items-center justify-center flex-col gap-10"
+				>
 					<Pie
 						id="my-chart-id"
 						:options="{
@@ -174,6 +194,7 @@ ChartJS.register(
 						:data="{
 							datasets: [
 								{
+									label: 'Questions',
 									backgroundColor: [
 										'#41B883',
 										'#E46651',
@@ -195,7 +216,7 @@ ChartJS.register(
 						}"
 					/>
 					<!-- legend -->
-					<div class="flex flex-row justify-around">
+					<div class="flex flex-row gap-10">
 						<div class="flex flex-row items-center">
 							<div
 								class="w-4 h-4 rounded-full mr-2"
@@ -219,7 +240,9 @@ ChartJS.register(
 						</div>
 					</div>
 				</div>
-				<div class="w-full border rounded-xl">
+				<div
+					class="w-full border flex items-center justify-center flex-col gap-10"
+				>
 					<Pie
 						class="w-full"
 						id="my-chart-id"
@@ -230,6 +253,7 @@ ChartJS.register(
 						:data="{
 							datasets: [
 								{
+									label: 'Questions',
 									backgroundColor: ['#41B883', '#E46651'],
 									data: [
 										studentLeetCodeData.matchedUser
@@ -246,7 +270,7 @@ ChartJS.register(
 						}"
 					/>
 					<!-- legend -->
-					<div class="flex flex-row justify-around">
+					<div class="flex flex-row gap-10">
 						<div class="flex flex-row items-center">
 							<div
 								class="w-4 h-4 rounded-full mr-2"

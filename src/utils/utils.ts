@@ -20,9 +20,9 @@ export async function get_students_of_batch(batch: string): Promise<Student[]> {
 			codeforces_username: "",
 		},
 	];
-	if (batch !== "all") {
+	if (batch === "ALL") {
 		await axios
-			.get(`${apiUrl}/students/${batch}`)
+			.get(`${apiUrl}/students`)
 			.then((response) => {
 				students = response.data;
 			})
@@ -31,7 +31,7 @@ export async function get_students_of_batch(batch: string): Promise<Student[]> {
 			});
 	} else {
 		await axios
-			.get(`${apiUrl}/students`)
+			.get(`${apiUrl}/students/${batch}`)
 			.then((response) => {
 				students = response.data;
 			})

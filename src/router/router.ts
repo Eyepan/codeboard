@@ -9,6 +9,10 @@ const router = createRouter({
 			component: () => import("../views/Home.vue"),
 			children: [
 				{
+					path: "",
+					redirect: "/ALL",
+				},
+				{
 					path: "/:batch",
 					name: "Batch",
 					component: () => import("../views/Batch.vue"),
