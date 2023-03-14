@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useAppStore } from "../stores/appStore";
-import DashBoard from "./DashboardPage.vue";
 
-const { currentBatch } = storeToRefs(useAppStore());
+const { currentBatch, currentPlatform } = storeToRefs(useAppStore());
 
 const batches = ["ALL", "2023", "2024", "2025"];
 </script>
@@ -15,8 +14,12 @@ const batches = ["ALL", "2023", "2024", "2025"];
 			class="fixed h-screen w-[20vw] lg:w-[10vw] p-2 bg-[var(--light-sidebar)] dark:bg-[var(--dark-sidebar)] text-black flex flex-col items-center justify-center"
 		>
 			<button
-				class="btn-primary bg-slate-500 hover:bg-slate-800"
-				@click="$router.replace('/contests')"
+				class="btn-primary bg-zinc-500 hover:bg-zinc-800"
+				@click="
+					$router.replace('/contests/leetcode');
+					currentPlatform = 'leetcode';
+					currentBatch = 'ALL';
+				"
 			>
 				Go to contests page
 			</button>

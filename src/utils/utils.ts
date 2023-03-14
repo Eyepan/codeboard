@@ -1,4 +1,5 @@
-import { ContestResult } from "../models/lccontests.model";
+import { ContestResult as CCContestResult } from "../models/cccontests.model";
+import { ContestResult as LCContestResult } from "../models/lccontests.model";
 import { Student } from "./../models/student.model";
 import StudentLeetCodeData from "../models/studentleetcode.model";
 import axios from "axios";
@@ -76,14 +77,27 @@ export async function get_student_leetcode_data(
 	return studentLeetCodeData;
 }
 
-export async function get_contest_details(
-	platform: string,
-	contestCode: string
-): Promise<ContestResult[]> {
-	let contestResultData: ContestResult[] = [];
-	console.log(`${apiUrl}/${platform}/contest/${contestCode}`);
+export async function get_leetcode_contest_details(contestCode: string) {
+	let contestResultData: LCContestResult[] = [];
+	console.log(`${apiUrl}/leetcode/${contestCode}`);
 	await axios
-		.get(`${apiUrl}/${platform}/contest/${contestCode}`)
+		.get(`${apiUrl}/leetcode/${contestCode}`)
+		.then((response) => {
+			contestResultData = response.data;
+		})
+		.catch((e) => {
+			if (e.response) {
+				error.value = e.response.data["detail"];
+			}
+		});
+	return contestResultData;
+}
+
+export async function get_codechef_contest_details(contestCode: string) {
+	let contestResultData: CCContestResult[] = [];
+	console.log(`${apiUrl}/codechef/${contestCode}`);
+	await axios
+		.get(`${apiUrl}/codechef/${contestCode}`)
 		.then((response) => {
 			contestResultData = response.data;
 		})

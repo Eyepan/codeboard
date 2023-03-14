@@ -35,6 +35,18 @@ const router = createRouter({
 			path: "/contests",
 			name: "Contests",
 			component: () => import("../views/ContestPage.vue"),
+			children: [
+				{
+					path: "leetcode",
+					name: "leetcode",
+					component: () => import("../views/LeetCodeContests.vue"),
+				},
+				{
+					path: "codechef",
+					name: "codechef",
+					component: () => import("../views/CodeChefContests.vue"),
+				},
+			],
 		},
 	],
 });

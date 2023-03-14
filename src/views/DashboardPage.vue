@@ -141,24 +141,24 @@ const departments = [
 			<div class="h-1 my-5 dark:bg-white bg-black w-full"></div>
 
 			<table class="w-full">
-				<th class="border border-slate-500">Name</th>
-				<th class="border border-slate-500">Dept</th>
-				<th class="border border-slate-500">Batch</th>
-				<th class="border border-slate-500">Leetcode ID</th>
-				<th class="border border-slate-500">Codechef ID</th>
-				<th class="border border-slate-500">Codeforces ID</th>
+				<th class="border border-zinc-500">Name</th>
+				<th class="border border-zinc-500">Dept</th>
+				<th class="border border-zinc-500">Batch</th>
+				<th class="border border-zinc-500">Leetcode ID</th>
+				<th class="border border-zinc-500">Codechef ID</th>
+				<th class="border border-zinc-500">Codeforces ID</th>
 				<tr
 					v-for="student in searchWiseFilteredStudents"
 					:key="student.id"
 				>
-					<td class="border border-slate-500">
+					<td class="border border-zinc-500">
 						<RouterLink :to="`/${student.id}`" class="underline">
 							{{ student.name }}
 						</RouterLink>
 					</td>
-					<td class="border border-slate-500">{{ student.dept }}</td>
-					<td class="border border-slate-500">{{ student.batch }}</td>
-					<td class="border border-slate-500">
+					<td class="border border-zinc-500">{{ student.dept }}</td>
+					<td class="border border-zinc-500">{{ student.batch }}</td>
+					<td class="border border-zinc-500">
 						<a
 							target="_blank"
 							class="underline"
@@ -167,7 +167,7 @@ const departments = [
 							{{ student.leetcode_username }}
 						</a>
 					</td>
-					<td class="border border-slate-500">
+					<td class="border border-zinc-500">
 						<a
 							:href="`https://www.codechef.com/users/${student.codechef_username}`"
 							target="_blank"
@@ -176,7 +176,7 @@ const departments = [
 							{{ student.codechef_username }}
 						</a>
 					</td>
-					<td class="border border-slate-500">
+					<td class="border border-zinc-500">
 						<a
 							class="underline"
 							target="_blank"

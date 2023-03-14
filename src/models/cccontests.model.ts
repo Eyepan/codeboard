@@ -9,18 +9,18 @@
 //     codeforces_username: str
 
 export interface ContestResult {
-	username: string;
+	user_handle: string;
 	rank: number;
 	score: number;
 	name: string;
 	dept: string;
 	batch: string;
-	codechef_username: string;
+	leetcode_username: string;
 	codeforces_username: string;
 }
 
 export interface FullContestResult {
-	username: string;
+	user_handle: string;
 	rank: number;
 	score: number;
 }

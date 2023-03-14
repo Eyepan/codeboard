@@ -4,29 +4,21 @@ import { useAppStore } from "../stores/appStore";
 import Spinner from "./Spinner.vue";
 import ErrorLog from "./ErrorLog.vue";
 import { ref, watch, reactive } from "vue";
-import { get_contest_details } from "../utils/utils";
-import {
-	ContestResult,
-	defaultContestResult,
-} from "../models/lccontests.model";
+import { get_leetcode_contest_details } from "../utils/utils";
+import { ContestResult, FullContestResult } from "../models/lccontests.model";
 
 const { currentPlatform, error } = storeToRefs(useAppStore());
 const loading = ref(false);
 const contestName = ref("");
 let contestDetails = reactive([] as ContestResult[]);
-let searchWiseFilteredContestDetails = reactive<ContestResult[]>([
-	defaultContestResult,
-]);
+let searchWiseFilteredContestDetails = reactive<ContestResult[]>([]);
 
 const searchFilter = ref("");
 async function searchContest() {
 	loading.value = true;
 	error.value = "";
 	console.log("Current platform", currentPlatform.value);
-	contestDetails = await get_contest_details(
-		currentPlatform.value,
-		contestName.value
-	);
+	contestDetails = await get_leetcode_contest_details(contestName.value);
 	searchWiseFilteredContestDetails = contestDetails;
 	loading.value = false;
 }
@@ -84,32 +76,32 @@ watch(searchFilter, () => {
 			{{ contestDetails.length }}
 		</div>
 		<table class="w-full" v-if="contestDetails.length > 0">
-			<th class="border border-slate-500">Username</th>
-			<th class="border border-slate-500">Rank</th>
-			<th class="border border-slate-500">Score</th>
-			<th class="border border-slate-500">Name</th>
-			<th class="border border-slate-500">Dept</th>
-			<th class="border border-slate-500">Batch</th>
+			<th class="border border-zinc-500">Username</th>
+			<th class="border border-zinc-500">Rank</th>
+			<th class="border border-zinc-500">Score</th>
+			<th class="border border-zinc-500">Name</th>
+			<th class="border border-zinc-500">Dept</th>
+			<th class="border border-zinc-500">Batch</th>
 			<tr
 				v-for="contestDetail in searchWiseFilteredContestDetails"
 				:key="contestDetail.rank"
 			>
-				<td class="border border-slate-500">
+				<td class="border border-zinc-500">
 					{{ contestDetail.username }}
 				</td>
-				<td class="border border-slate-500">
+				<td class="border border-zinc-500">
 					{{ contestDetail.rank }}
 				</td>
-				<td class="border border-slate-500">
+				<td class="border border-zinc-500">
 					{{ contestDetail.score }}
 				</td>
-				<td class="border border-slate-500">
+				<td class="border border-zinc-500">
 					{{ contestDetail.name }}
 				</td>
-				<td class="border border-slate-500">
+				<td class="border border-zinc-500">
 					{{ contestDetail.dept }}
 				</td>
-				<td class="border border-slate-500">
+				<td class="border border-zinc-500">
 					{{ contestDetail.batch }}
 				</td>
 			</tr>

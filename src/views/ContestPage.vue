@@ -15,25 +15,26 @@ const platforms = ["leetcode", "codechef"];
 			class="fixed h-screen w-[20vw] lg:w-[10vw] p-2 bg-[var(--light-sidebar)] dark:bg-[var(--dark-sidebar)] text-black flex flex-col items-center justify-center"
 		>
 			<button
-				class="btn-primary bg-slate-500 hover:bg-slate-800"
+				class="btn-primary bg-zinc-500 hover:bg-zinc-800"
 				@click="$router.replace('/')"
 			>
 				Go back to dashboard
 			</button>
 			<!-- spacer -->
 			<div class="flex-1"></div>
-			<button
+			<RouterLink
 				class="btn-primary"
 				:class="
 					currentPlatform === platform
 						? '!bg-[var(--primary-hover)] border'
 						: ''
 				"
-				@click="currentPlatform = platform"
 				v-for="platform in platforms"
+				:to="`/contests/${platform}`"
+				@click="currentPlatform = platform"
 			>
 				{{ platform }}
-			</button>
+			</RouterLink>
 			<div class="flex-1"></div>
 		</div>
 		<!-- main content -->
@@ -41,7 +42,7 @@ const platforms = ["leetcode", "codechef"];
 		<div
 			class="overflow-y-scroll ml-[20vw] lg:ml-[10vw] w-[80vw] lg:w-[90vw]"
 		>
-			<Contests />
+			<RouterView />
 		</div>
 	</div>
 </template>

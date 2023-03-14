@@ -69,7 +69,7 @@ ChartJS.register(
 		<Spinner v-if="loading" />
 		<div v-else>
 			<button
-				class="btn-primary w-1/12 p-0 bg-slate-500"
+				class="btn-primary w-1/12 p-0 bg-zinc-500"
 				@click="$router.push('/')"
 			>
 				Go back
