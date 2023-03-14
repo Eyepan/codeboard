@@ -34,9 +34,6 @@ h3 {
 	font-family: "Poppins", sans-serif;
 	font-weight: 700;
 }
-/* 
-    TODO: make the .btn-primary color gradient from primary to hover
-*/
 
 @layer base {
 	html {
@@ -54,5 +51,8 @@ h3 {
 		@apply bg-[var(--primary-color)] hover:bg-[var(--primary-hover)];
 		@apply text-[var(--light-text)] dark:text-[var(--dark-text)];
 		@apply p-2;
+	}
+	* {
+		@apply rounded-xl;
 	}
 }

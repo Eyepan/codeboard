@@ -56,6 +56,23 @@ watch(searchFilter, () => {
 					regex.test(contestDetail.user_handle)
 			  );
 });
+
+function downloadCSV() {
+	let csvContent = "data:text/csv;charset=utf-8,";
+	csvContent += Object.keys(contestDetails[0]).join(",") + "\n";
+	csvContent += contestDetails
+		.map((row) => Object.values(row).join(","))
+		.join("\n");
+	const encodedUri = encodeURI(csvContent);
+	const link = document.createElement("a");
+	link.setAttribute("href", encodedUri);
+	link.setAttribute(
+		"download",
+		`${contestName.value + contestNumber.value}.csv`
+	);
+	document.body.appendChild(link); // Required for FF
+	link.click();
+}
 </script>
 
 <template>
@@ -89,6 +106,7 @@ watch(searchFilter, () => {
 					v-model="contestNumber"
 					class="bg-black border w-full p-2"
 					placeholder="Contest number. eg. 100"
+					required
 				/>
 				<select
 					name=""
@@ -153,5 +171,11 @@ watch(searchFilter, () => {
 		>
 			No participants
 		</div>
+		<button
+			class="w-min py-1 h-14 absolute bottom-10 right-10 z-50 btn-primary"
+			@click="downloadCSV()"
+		>
+			Download CSV
+		</button>
 	</div>
 </template>
