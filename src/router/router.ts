@@ -9,13 +9,27 @@ const router = createRouter({
 		},
 		{
 			path: "/home",
-			name: "Home",
 			component: () => import("../views/HomePage.vue"),
+			children: [
+				// dashboard
+				{
+					path: "",
+					name: "Dashboard",
+					component: () => import("../views/DashboardPage.vue"),
+				},
+				{
+					path: "/:id",
+					name: "Student",
+					component: () => import("../views/StudentPage.vue"),
+				},
+
+				// student
+			],
 		},
 		{
-			path: "/:id",
-			name: "Student",
-			component: () => import("../views/StudentPage.vue"),
+			path: "/home",
+			name: "Home",
+			component: () => import("../views/HomePage.vue"),
 		},
 		{
 			path: "/contests",

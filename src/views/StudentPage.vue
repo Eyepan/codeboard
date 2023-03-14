@@ -40,7 +40,7 @@ onMounted(async () => {
 		student.value.leetcode_username
 	);
 	if (error.value !== "") {
-		student.value = {
+		student.value = await {
 			id: "Not Found",
 			name: "Not Found",
 			dept: "Not Found",
@@ -64,10 +64,16 @@ ChartJS.register(
 </script>
 
 <template>
-	<div v-auto-animate class="px-20 overflow-y-scroll">
+	<div v-auto-animate class="p-4 h-screen overflow-y-scroll">
 		<ErrorLog v-if="error !== ''" :message="error" />
 		<Spinner v-if="loading" />
 		<div v-else>
+			<button
+				class="btn-primary w-1/12 p-0 bg-slate-500"
+				@click="$router.push('/')"
+			>
+				Go back
+			</button>
 			<h1 class="text-7xl">{{ student.name }}</h1>
 			<h3 class="text-3xl">Student Details:</h3>
 			<div class="grid grid-cols-3">

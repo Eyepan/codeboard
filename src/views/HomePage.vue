@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useAppStore } from "../stores/appStore";
-import DashBoard from "../components/Dashboard.vue";
+import DashBoard from "./DashboardPage.vue";
 
 const { currentBatch } = storeToRefs(useAppStore());
 
@@ -41,7 +41,7 @@ const batches = ["ALL", "2023", "2024", "2025"];
 		<div
 			class="overflow-y-scroll ml-[20vw] lg:ml-[10vw] w-[80vw] lg:w-[90vw]"
 		>
-			<DashBoard />
+			<RouterView />
 		</div>
 	</div>
 </template>
