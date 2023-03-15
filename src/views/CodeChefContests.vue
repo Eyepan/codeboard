@@ -172,7 +172,7 @@ function downloadCSV() {
 			No participants
 		</div>
 		<button
-			class="w-min py-1 h-14 absolute bottom-10 right-10 z-50 btn-primary"
+			class="w-min py-1 h-14 fixed bottom-10 right-10 z-50 btn-primary"
 			@click="downloadCSV()"
 		>
 			Download CSV
