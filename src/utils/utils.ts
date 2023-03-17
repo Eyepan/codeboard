@@ -1,9 +1,11 @@
 import { ContestResult as CCContestResult } from "../models/cccontests.model";
 import { ContestResult as LCContestResult } from "../models/lccontests.model";
 import { Student } from "./../models/student.model";
-import StudentLeetCodeData from "../models/studentleetcode.model";
 import axios from "axios";
-import { defaultStudentLeetCodeData } from "./../models/studentleetcode.model";
+import {
+	type StudentLeetCodeData,
+	defaultStudentLeetCodeData,
+} from "./../models/studentleetcode.model";
 import { storeToRefs } from "pinia";
 import { useAppStore } from "../stores/appStore";
 
