@@ -6,6 +6,8 @@ export interface Student {
 	leetcode_username: string;
 	codechef_username: string;
 	codeforces_username: string;
+	leetcode_total_problems: number;
+	leetcode_easy_problems: number;
+	leetcode_medium_problems: number;
+	leetcode_hard_problems: number;
 }
-
-// [ { "id": "a44b6107-d675-4f2d-a96f-59f88b474c62", "name": "JohnDoe", "dept": "CSE", "batch": 2023, "leetcode_username": "pan-iyappan", "codechef_username": "something", "codeforces_username": "something else" } ]

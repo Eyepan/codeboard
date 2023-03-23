@@ -49,6 +49,10 @@ onMounted(async () => {
 			leetcode_username: "Not Found",
 			codechef_username: "Not Found",
 			codeforces_username: "Not Found",
+			leetcode_total_problems: 0,
+			leetcode_easy_problems: 0,
+			leetcode_medium_problems: 0,
+			leetcode_hard_problems: 0,
 		};
 	}
 	loading.value = false;

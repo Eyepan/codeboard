@@ -90,16 +90,6 @@ const departments = [
 	"AIDS",
 	"CSBS",
 ];
-
-// watch(filterCriteria, () => {
-//   console.log(
-//     students.filter(
-//       (e) => e.dept === filterCriteria.value || filterCriteria.value === "ALL"
-//     )
-//   );
-//   console.log(filterCriteria.value);
-//   console.log(students);
-// });
 </script>
 
 <template>
@@ -119,8 +109,7 @@ const departments = [
 			<h3 class="text-2xl flex flex-row justify-between">
 				<div>Batch: {{ currentBatch }}</div>
 				<div>Dept: {{ selectedDepartment }}</div>
-				<div>Students: {{ batchWiseFilteredStudents.length }}</div>
-				<div>Total Students: {{ students.length }}</div>
+				<div>Students: {{ departmentWiseFilteredStudents.length }}</div>
 			</h3>
 			<!-- filter by dept -->
 			<div class="flex flex-row gap-5 mt-5">
@@ -138,13 +127,23 @@ const departments = [
 					{{ department }}
 				</button>
 			</div>
-			<div class="h-1 my-5 dark:bg-white bg-black w-full"></div>
+			<div class="h-1 mt-5 dark:bg-white bg-black w-full"></div>
 
-			<table class="w-full">
+			<div class="my-2">Total Students: {{ students.length }}</div>
+			<table class="w-full text-center">
 				<th class="border border-zinc-500">Name</th>
 				<th class="border border-zinc-500">Dept</th>
 				<th class="border border-zinc-500">Batch</th>
 				<th class="border border-zinc-500">Leetcode ID</th>
+				<th class="border border-zinc-500">
+					<p class="">Leetcode Questions</p>
+					<div class="grid grid-cols-4 text-sm px-4">
+						<div class="">T</div>
+						<div class="">E</div>
+						<div class="">M</div>
+						<div class="">H</div>
+					</div>
+				</th>
 				<th class="border border-zinc-500">Codechef ID</th>
 				<th class="border border-zinc-500">Codeforces ID</th>
 				<tr
@@ -166,6 +165,22 @@ const departments = [
 						>
 							{{ student.leetcode_username }}
 						</a>
+					</td>
+					<td class="border border-zinc-500 px-4 py-1">
+						<div class="grid grid-cols-4">
+							<div class="">
+								{{ student.leetcode_total_problems }}
+							</div>
+							<div class="">
+								{{ student.leetcode_easy_problems }}
+							</div>
+							<div class="">
+								{{ student.leetcode_medium_problems }}
+							</div>
+							<div class="">
+								{{ student.leetcode_hard_problems }}
+							</div>
+						</div>
 					</td>
 					<td class="border border-zinc-500">
 						<a
