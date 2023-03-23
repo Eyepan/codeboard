@@ -23,6 +23,10 @@ export async function get_students(): Promise<Student[]> {
 			leetcode_username: "",
 			codechef_username: "",
 			codeforces_username: "",
+			leetcode_easy_problems: 0,
+			leetcode_medium_problems: 0,
+			leetcode_hard_problems: 0,
+			leetcode_total_problems: 0,
 		},
 	];
 	await axios
@@ -47,6 +51,10 @@ export async function get_student_by_id(id: string): Promise<Student> {
 		leetcode_username: "",
 		codechef_username: "",
 		codeforces_username: "",
+		leetcode_easy_problems: 0,
+		leetcode_medium_problems: 0,
+		leetcode_hard_problems: 0,
+		leetcode_total_problems: 0,
 	};
 	await axios
 		.get(`${apiUrl}/students/student/${id}`)
